@@ -19,19 +19,21 @@ public class changeAttentionDegree : RAINAction
 
     public override ActionResult Execute(AI ai)
     {
-		EnemyDataScript.AttentionDegrees ad = ai.Body.GetComponent<EnemyDataScript>().attentionDegree;
+		EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
     	
     	//Cambiamos el estado de alerta segun el estado actual
-    	if(ad == EnemyDataScript.AttentionDegrees.ALERT)
+		if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.ALERT)
     	{
-    		ad = EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION;
+			eds.attentionDegree = EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION;
     	}
-    	else if(ad == EnemyDataScript.AttentionDegrees.CAUTION)
+		else if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.CAUTION)
     	{
-    		ad = EnemyDataScript.AttentionDegrees.NORMAL;
+			eds.attentionDegree = EnemyDataScript.AttentionDegrees.NORMAL;
     	}
-    	
-		ai.Body.GetComponent<EnemyDataScript>().attentionDegree = ad;
+		
+		eds.suspects = false;
+		eds.chronoBeforeInvestigate = 0.0f;
+		eds.targetChasePlayer = Vector3.zero;
     	
         return ActionResult.SUCCESS;
     }

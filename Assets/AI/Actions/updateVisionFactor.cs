@@ -13,15 +13,13 @@ public class updateVisionFactor : RAINAction
 					deltaFactor, 
 					mainVisionDistance, 
 					periferialVisionDistance, 
-					actualVisionFactor,
-					chrono;
+					actualVisionFactor;
 					
 	private EnemyDataScript eds;
 	
     public updateVisionFactor()
     {
         actionName = "updateVisionFactor";
-		chrono = 0.0f;
 	}
 	
 	public override void Start(AI ai)
@@ -33,6 +31,7 @@ public class updateVisionFactor : RAINAction
     {
     	eds = ai.Body.GetComponent<EnemyDataScript>();
     
+    //COMPROBAR CON QUE SENSORES DETECTAMOS AL PLAYER
 		bool playerSeenMain = ai.WorkingMemory.GetItem("playerSeenMain").GetValue<GameObject>() != null;
 		//if(playerSeenMain) Debug.Log ("MAIN");
 		
@@ -45,6 +44,7 @@ public class updateVisionFactor : RAINAction
 		bool playerSensed = playerSeenMain | playerSeenPeriferial | playerSensedNear;
 		
 		
+	//MODIFICAR VISIONFACTOR
 		playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
 		enemyEyesPos = ai.Senses.GetSensor("mainVision").Position;
 		distance = Vector3.Distance(playerPos, enemyEyesPos);
@@ -101,27 +101,39 @@ public class updateVisionFactor : RAINAction
 			//Modificamos el visionFactor
 			eds.substractVisionFactor(deltaFactor);
 			
-			//...
+			if(eds.suspects)
+			{
+				eds.chronoBeforeInvestigate += Time.deltaTime;
+			}
 		}
 		else
 		{
-			chrono = 0.0f;
-			eds.lastPointSeen = GameObject.FindGameObjectWithTag("Player").transform.position;
-			ai.WorkingMemory.SetItem("lastPointSeen", eds.lastPointSeen);
+			if(!eds.suspects) eds.chronoBeforeInvestigate = 0.0f;
+			if(eds.isVisionFactorBeyondThreshold())
+			{
+				eds.lastPointSeen = GameObject.FindGameObjectWithTag("Player").transform.position;
+				ai.WorkingMemory.SetItem("lastPointSeen", eds.lastPointSeen);
+			}
 		}
 		
+	//MODIFICACION DEL ATTENTIONDEGREE
 		//Si el visionFactor se encuentra en su valor maximo se pasa a ALERT
 		if(eds.visionFactor == 1.0f)
 		{
 			eds.attentionDegree = EnemyDataScript.AttentionDegrees.ALERT;
 			updateTargetChasePlayer(ai);
 		}
-		else if (eds.isVisionFactorBeyondThreshold()
-		         && eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION
-		         && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
+		else if (eds.isVisionFactorBeyondThreshold())
 		{
-			eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
+			eds.suspects = true;
+			
+			if(eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION
+		     && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
+			{
+				eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
+			}
 		}
+		
 		
         return ActionResult.SUCCESS;
     }

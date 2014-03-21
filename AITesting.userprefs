@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\Actions\updateVisionFactor.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\Actions\changeAttentionDegree.cs">
     <Files>
-      <File FileName="Assets\AI\Actions\checkChasePlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\Actions\updateVisionFactor.cs" Line="115" Column="66" />
+      <File FileName="Assets\EnemyDataScript.cs" Line="28" Column="17" />
+      <File FileName="Assets\AI\Actions\changeAttentionDegree.cs" Line="36" Column="40" />
+      <File FileName="Assets\AI\Actions\checkInvestigate.cs" Line="1" Column="1" />
       <File FileName="Assets\AI\Actions\checkFacePlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\updateVisionFactor.cs" Line="34" Column="55" />
-      <File FileName="Assets\EnemyDataScript.cs" Line="40" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

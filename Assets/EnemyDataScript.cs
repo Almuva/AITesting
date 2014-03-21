@@ -17,10 +17,13 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	public AttentionDegrees attentionDegree;
 	
-	public bool isSeeingPlayer;
+	public bool isSeeingPlayer,
+				suspects;
 	
 	public float 	visionFactor,
-					visionFactorCaution;
+					visionFactorCaution,
+					chronoBeforeInvestigate,
+					waitingBeforeInvestigate;
 					
 	public Vector3 targetChasePlayer,
 					lastPointSeen;
@@ -39,11 +42,14 @@ public class EnemyDataScript : MonoBehaviour {
 	void init()
 	{
 		isSeeingPlayer = false;
+		suspects = false;
 		visionFactor = 0.0f;
 		visionFactorCaution = 0.6f;
 		attentionDegree = AttentionDegrees.NORMAL;
 		targetChasePlayer = Vector3.zero;
 		lastPointSeen = Vector3.zero;
+		chronoBeforeInvestigate = 0.0f;
+		waitingBeforeInvestigate = 3.0f;
 	}
 	
 	// Update is called once per frame
