@@ -17,6 +17,8 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	public AttentionDegrees attentionDegree;
 	
+	public bool isSeeingPlayer;
+	
 	public float 	visionFactor,
 					visionFactorCaution;
 					
@@ -35,6 +37,7 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	void init()
 	{
+		isSeeingPlayer = false;
 		visionFactor = 0.0f;
 		visionFactorCaution = 0.6f;
 		attentionDegree = AttentionDegrees.NORMAL;
