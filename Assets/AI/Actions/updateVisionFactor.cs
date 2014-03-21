@@ -100,10 +100,14 @@ public class updateVisionFactor : RAINAction
 			
 			//Modificamos el visionFactor
 			eds.substractVisionFactor(deltaFactor);
+			
+			//...
 		}
 		else
 		{
 			chrono = 0.0f;
+			eds.lastPointSeen = GameObject.FindGameObjectWithTag("Player").transform.position;
+			ai.WorkingMemory.SetItem("lastPointSeen", eds.lastPointSeen);
 		}
 		
 		//Si el visionFactor se encuentra en su valor maximo se pasa a ALERT
@@ -113,7 +117,8 @@ public class updateVisionFactor : RAINAction
 			updateTargetChasePlayer(ai);
 		}
 		else if (eds.isVisionFactorBeyondThreshold()
-		         && eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION)
+		         && eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION
+		         && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
 		{
 			eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
 		}

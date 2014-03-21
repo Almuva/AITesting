@@ -22,7 +22,8 @@ public class EnemyDataScript : MonoBehaviour {
 	public float 	visionFactor,
 					visionFactorCaution;
 					
-	public Vector3 targetChasePlayer;
+	public Vector3 targetChasePlayer,
+					lastPointSeen;
 	
 	//private RAIN.Memory.MemoryObject debugObject = null;
 	//private float debug = 0.0f;
@@ -42,6 +43,7 @@ public class EnemyDataScript : MonoBehaviour {
 		visionFactorCaution = 0.6f;
 		attentionDegree = AttentionDegrees.NORMAL;
 		targetChasePlayer = Vector3.zero;
+		lastPointSeen = Vector3.zero;
 	}
 	
 	// Update is called once per frame
