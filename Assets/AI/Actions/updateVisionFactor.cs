@@ -13,20 +13,26 @@ public class updateVisionFactor : RAINAction
 					deltaFactor, 
 					mainVisionDistance, 
 					periferialVisionDistance, 
-					actualVisionFactor;
+					actualVisionFactor,
+					chrono;
+					
+	private EnemyDataScript eds;
 	
     public updateVisionFactor()
     {
         actionName = "updateVisionFactor";
-    }
-
-    public override void Start(AI ai)
+		chrono = 0.0f;
+	}
+	
+	public override void Start(AI ai)
     {
-        base.Start(ai); 
+        base.Start(ai);
     }
 
     public override ActionResult Execute(AI ai)
     {
+    	eds = ai.Body.GetComponent<EnemyDataScript>();
+    
 		bool playerSeenMain = ai.WorkingMemory.GetItem("playerSeenMain").GetValue<GameObject>() != null;
 		//if(playerSeenMain) Debug.Log ("MAIN");
 		
@@ -38,13 +44,13 @@ public class updateVisionFactor : RAINAction
 		
 		bool playerSensed = playerSeenMain | playerSeenPeriferial | playerSensedNear;
 		
+		
 		playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
 		enemyEyesPos = ai.Senses.GetSensor("mainVision").Position;
 		distance = Vector3.Distance(playerPos, enemyEyesPos);
 		
 		//Antes que nada, si estamos en alerta las areas de deteccion sirven para detectar al player al momento.
-		if((ai.Body.GetComponent<EnemyDataScript>().attentionDegree == EnemyDataScript.AttentionDegrees.ALERT)
-		   && playerSensed)
+		if((eds.attentionDegree == EnemyDataScript.AttentionDegrees.ALERT)  &&  playerSensed)
 		{
 			updateTargetChasePlayer(ai);
 			return ActionResult.SUCCESS;
@@ -57,7 +63,7 @@ public class updateVisionFactor : RAINAction
 			deltaFactor = Time.deltaTime*0.2f;
 			
 			//Modificamos el visionFactor
-			ai.Body.GetComponent<EnemyDataScript>().addVisionFactor(deltaFactor);
+			eds.addVisionFactor(deltaFactor);
 		}
 		
 		//si vemos al player con el cono de vision periferico, incrementamos el visionFactor un poco (la mitad que si lo vemos con el main)
@@ -70,7 +76,7 @@ public class updateVisionFactor : RAINAction
 			deltaFactor *= Time.deltaTime * 0.5f;
 			
 			//Modificamos el visionFactor
-			ai.Body.GetComponent<EnemyDataScript>().addVisionFactor(deltaFactor);
+			eds.addVisionFactor(deltaFactor);
 		}
 		
 		//si vemos al player con el cono de vision principal, incrementamos el visionFactor bastante
@@ -83,7 +89,7 @@ public class updateVisionFactor : RAINAction
 			deltaFactor *= Time.deltaTime;
 			
 			//Modificamos el visionFactor
-			ai.Body.GetComponent<EnemyDataScript>().addVisionFactor(deltaFactor);
+			eds.addVisionFactor(deltaFactor);
 		}
 		
 		//Si no se ha detectado al player de ninguna de las maneras decrementamos el visionFactor
@@ -93,14 +99,23 @@ public class updateVisionFactor : RAINAction
 			deltaFactor = 0.3f*Time.deltaTime;
 			
 			//Modificamos el visionFactor
-			ai.Body.GetComponent<EnemyDataScript>().substractVisionFactor(deltaFactor);
+			eds.substractVisionFactor(deltaFactor);
+		}
+		else
+		{
+			chrono = 0.0f;
 		}
 		
 		//Si el visionFactor se encuentra en su valor maximo se pasa a ALERT
-		if(ai.Body.GetComponent<EnemyDataScript>().visionFactor == 1.0f)
+		if(eds.visionFactor == 1.0f)
 		{
-			ai.Body.GetComponent<EnemyDataScript>().attentionDegree = EnemyDataScript.AttentionDegrees.ALERT;
+			eds.attentionDegree = EnemyDataScript.AttentionDegrees.ALERT;
 			updateTargetChasePlayer(ai);
+		}
+		else if (eds.isVisionFactorBeyondThreshold()
+		         && eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION)
+		{
+			eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
 		}
 		
         return ActionResult.SUCCESS;
