@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\Actions\updateVisionFactor.cs">
+    <Files>
+      <File FileName="Assets\EnemyDataScript.cs" Line="69" Column="36" />
+      <File FileName="Assets\AI\Actions\debugAction.cs" Line="26" Column="36" />
+      <File FileName="Assets\AI\Actions\updateVisionFactor.cs" Line="34" Column="52" />
+      <File FileName="Assets\AI\Actions\checkChasePlayer.cs" Line="24" Column="42" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
