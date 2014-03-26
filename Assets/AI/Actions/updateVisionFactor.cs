@@ -42,6 +42,7 @@ public class updateVisionFactor : RAINAction
 		//if(playerSensedNear) Debug.Log ("NEAR");
 		
 		bool playerSensed = playerSeenMain | playerSeenPeriferial | playerSensedNear;
+		eds.isSeeingPlayer = playerSeenMain | playerSeenPeriferial;
 		
 		
 	//MODIFICAR VISIONFACTOR
