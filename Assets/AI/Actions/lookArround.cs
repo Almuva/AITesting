@@ -30,6 +30,7 @@ public class lookArround : RAINAction
     	if(eds.timerLookArround >= eds.lookArroundTime)
     	{
 			ai.WorkingMemory.SetItem("hasToLookArround", false);
+			ai.WorkingMemory.SetItem("hasToChangeAD", true);
     	}
  
  		//Terminamos de mirar en una de las direcciones. Hay que escoger otra.

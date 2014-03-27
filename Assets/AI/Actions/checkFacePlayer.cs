@@ -26,6 +26,9 @@ public class checkFacePlayer : RAINAction
     	}
     	else
     	{
+			bool facingNow = ai.WorkingMemory.GetItem("hasToFacePlayer").GetValue<bool>();
+			if(facingNow) return ActionResult.FAILURE;
+			
 			bool hasToFacePlayer = ai.Body.GetComponent<EnemyDataScript>().isVisionFactorBeyondThreshold();
 			ai.WorkingMemory.SetItem("hasToFacePlayer", hasToFacePlayer);
     	}

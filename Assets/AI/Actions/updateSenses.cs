@@ -6,7 +6,7 @@ using RAIN.Action;
 using RAIN.Perception.Sensors;
 
 [RAINAction]
-public class updateVisionFactor : RAINAction
+public class updateSenses : RAINAction
 {
 	private Vector3 playerPos, enemyEyesPos;
 	private float 	distance, 
@@ -14,24 +14,23 @@ public class updateVisionFactor : RAINAction
 					mainVisionDistance, 
 					periferialVisionDistance, 
 					actualVisionFactor;
-					
+	
 	private EnemyDataScript eds;
 	
-    public updateVisionFactor()
-    {
-        actionName = "updateVisionFactor";
+	public updateSenses()
+	{
+		actionName = "updateSenses";
 	}
 	
 	public override void Start(AI ai)
-    {
-        base.Start(ai);
-    }
-
-    public override ActionResult Execute(AI ai)
-    {
-    	eds = ai.Body.GetComponent<EnemyDataScript>();
-    
-    //COMPROBAR CON QUE SENSORES DETECTAMOS AL PLAYER
+	{
+		base.Start(ai);
+		eds = ai.Body.GetComponent<EnemyDataScript>();
+	}
+	
+	public override ActionResult Execute(AI ai)
+	{
+	//COMPROBAR CON QUE SENSORES DETECTAMOS AL PLAYER
 		bool playerSeenMain = ai.WorkingMemory.GetItem("playerSeenMain").GetValue<GameObject>() != null;
 		//if(playerSeenMain) Debug.Log ("MAIN");
 		
@@ -43,6 +42,9 @@ public class updateVisionFactor : RAINAction
 		
 		bool playerSensed = playerSeenMain | playerSeenPeriferial | playerSensedNear;
 		eds.isSeeingPlayer = playerSeenMain | playerSeenPeriferial;
+		
+		//Sonido
+		bool decoyHeardNow = ai.WorkingMemory.GetItem("decoySensed").GetValue<GameObject>() != null;
 		
 		
 	//MODIFICAR VISIONFACTOR
@@ -101,19 +103,15 @@ public class updateVisionFactor : RAINAction
 			
 			//Modificamos el visionFactor
 			eds.substractVisionFactor(deltaFactor);
-			
-			if(eds.suspects)
-			{
-				eds.chronoBeforeInvestigate += Time.deltaTime;
-			}
 		}
 		else
 		{
 			if(!eds.suspects) eds.chronoBeforeInvestigate = 0.0f;
+			
 			if(eds.isVisionFactorBeyondThreshold())
 			{
-				eds.lastPointSeen = GameObject.FindGameObjectWithTag("Player").transform.position;
-				ai.WorkingMemory.SetItem("lastPointSeen", eds.lastPointSeen);
+				eds.lastPointSensed = GameObject.FindGameObjectWithTag("Player").transform.position;
+				ai.WorkingMemory.SetItem("lastPointSensed", eds.lastPointSensed);
 			}
 		}
 		
@@ -127,23 +125,32 @@ public class updateVisionFactor : RAINAction
 		else if (eds.isVisionFactorBeyondThreshold())
 		{
 			eds.suspects = true;
+			eds.decoyHeard = false;
+			ai.WorkingMemory.SetItem("decoyHeard", false);
 			
 			if(eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION
-		     && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
+			   && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
 			{
 				eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
 			}
 		}
+		else if(decoyHeardNow && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
+		{
+			if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.NORMAL) eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
+			eds.decoyHeard = true;
+			ai.WorkingMemory.SetItem("decoyHeard", true);
+			eds.lastPointSensed = GameObject.FindGameObjectWithTag("Player").transform.position;
+			ai.WorkingMemory.SetItem("lastPointSensed", eds.lastPointSensed);
+		}
 		
-		
-        return ActionResult.SUCCESS;
-    }
-
-    public override void Stop(AI ai)
-    {
-        base.Stop(ai);
-    }
-    
+		return ActionResult.SUCCESS;
+	}
+	
+	public override void Stop(AI ai)
+	{
+		base.Stop(ai);
+	}
+	
 	private void updateTargetChasePlayer(AI ai)
 	{
 		ai.Body.GetComponent<EnemyDataScript>().setTargetChasePlayer();

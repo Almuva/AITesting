@@ -31,9 +31,7 @@ public class changeAttentionDegree : RAINAction
 			eds.attentionDegree = EnemyDataScript.AttentionDegrees.NORMAL;
     	}
 		
-		eds.suspects = false;
-		eds.chronoBeforeInvestigate = 0.0f;
-		eds.targetChasePlayer = Vector3.zero;
+		ai.WorkingMemory.SetItem("hasToChangeAD", false);
     	
         return ActionResult.SUCCESS;
     }

@@ -5,11 +5,11 @@ using RAIN.Core;
 using RAIN.Action;
 
 [RAINAction]
-public class checkInvestigate : RAINAction
+public class stopChasingPlayer : RAINAction
 {
-    public checkInvestigate()
+    public stopChasingPlayer()
     {
-        actionName = "checkInvestigate";
+        actionName = "stopChasingPlayer";
     }
 
     public override void Start(AI ai)
@@ -20,18 +20,15 @@ public class checkInvestigate : RAINAction
     public override ActionResult Execute(AI ai)
     {
     	EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
+		//por si acaso.
+    	eds.suspects = false;
+    	eds.decoyHeard = false;
+    	ai.WorkingMemory.SetItem("decoyHeard", false);
     	
-		if(eds.suspects && !eds.isVisionFactorBeyondThreshold())
-		{
-			eds.chronoBeforeInvestigate += Time.deltaTime;
-			
-			if(eds.chronoBeforeInvestigate >= eds.waitingBeforeInvestigate)
-			{
-				ai.WorkingMemory.SetItem("hasToInvestigate", true);
-			}				
-		}
+		ai.Body.GetComponent<EnemyDataScript>().targetChasePlayer = Vector3.zero;
+		ai.WorkingMemory.SetItem("hasToChangeAD", true);
 		
-        return ActionResult.FAILURE;
+        return ActionResult.SUCCESS;
     }
 
     public override void Stop(AI ai)

@@ -29,6 +29,13 @@ public class stopInvestigate : RAINAction
 		eds.timerLookArround = 0.0f;
 		eds.timerLookAt = 0.0f;
 		
+		eds.suspects = false;
+		eds.chronoBeforeInvestigate = 0.0f;
+		
+		eds.decoyHeard = false;
+		ai.WorkingMemory.SetItem("decoyHeard", false);
+		ai.WorkingMemory.SetItem("hasToInvestigate", false);
+		
 		eds.currentLookAt = eds.lookAts[Random.Range(0,4)];
 		
 		ai.WorkingMemory.SetItem("hasToLookArround", true);

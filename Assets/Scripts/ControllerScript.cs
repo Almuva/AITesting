@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ControllerScript : MonoBehaviour {
 
 	public Transform targetTransform;
-	public float velocity = 1.0f;
+	public float walkVelocity = 1.0f;
+	public float runVelocity = 2.0f;
+	public float currentVelocity;
 	public float rotVelocity = 1.0f;
 	public Camera playerCamera;
 	
 	private Vector3 moveDir;
 	private float rotAngle;
 	
+	public AudioClip[] sfx;
+	
 	// Use this for initialization
 	void Start () {
-	
+		currentVelocity = walkVelocity;
 	}
 	
 	void Update()
@@ -39,6 +44,21 @@ public class ControllerScript : MonoBehaviour {
 		moveDir.y = 0;
 		moveDir.Normalize();
 		
+		if(Input.GetKey(KeyCode.LeftShift))
+		{
+			currentVelocity = runVelocity;
+		}
+		else
+		{
+			currentVelocity = walkVelocity;
+		}
+		
+		if(Input.GetKey(KeyCode.E))
+		{
+			//audio.PlayOneShot(sfx[0]);
+			audio.Play();
+		}
+		
 		//orientar hacia direccion de movimiento
 		if(moveDir != Vector3.zero)
 		{
@@ -50,6 +70,6 @@ public class ControllerScript : MonoBehaviour {
 	
 	void FixedUpdate () 
 	{
-		GetComponent<CharacterController>().SimpleMove(moveDir * velocity);
+		GetComponent<CharacterController>().SimpleMove(moveDir * currentVelocity);
 	}
 }

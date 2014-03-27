@@ -5,11 +5,11 @@ using RAIN.Core;
 using RAIN.Action;
 
 [RAINAction]
-public class checkInvestigate : RAINAction
+public class facedDecoyPos : RAINAction
 {
-    public checkInvestigate()
+    public facedDecoyPos()
     {
-        actionName = "checkInvestigate";
+        actionName = "facedDecoyPos";
     }
 
     public override void Start(AI ai)
@@ -19,19 +19,14 @@ public class checkInvestigate : RAINAction
 
     public override ActionResult Execute(AI ai)
     {
+    	//Nos hemos acabado de orientar a la posicion del senyuelo. Sopechamos.
     	EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
     	
-		if(eds.suspects && !eds.isVisionFactorBeyondThreshold())
-		{
-			eds.chronoBeforeInvestigate += Time.deltaTime;
-			
-			if(eds.chronoBeforeInvestigate >= eds.waitingBeforeInvestigate)
-			{
-				ai.WorkingMemory.SetItem("hasToInvestigate", true);
-			}				
-		}
-		
-        return ActionResult.FAILURE;
+    	eds.decoyHeard = false;
+		ai.WorkingMemory.SetItem("decoyHeard", false);
+    	eds.suspects = true;
+    	
+        return ActionResult.SUCCESS;
     }
 
     public override void Stop(AI ai)

@@ -18,7 +18,8 @@ public class EnemyDataScript : MonoBehaviour {
 	public AttentionDegrees attentionDegree;
 	
 	public bool isSeeingPlayer,
-				suspects;
+				suspects,
+				decoyHeard;
 	
 	public float 	visionFactor,
 					visionFactorCaution,
@@ -30,7 +31,7 @@ public class EnemyDataScript : MonoBehaviour {
 					lookAtTime;
 					
 	public Vector3 targetChasePlayer,
-					lastPointSeen,
+					lastPointSensed,
 					currentLookAt;
 					
 	public Vector3[] lookAts;
@@ -53,6 +54,7 @@ public class EnemyDataScript : MonoBehaviour {
 		
 		isSeeingPlayer = false;
 		suspects = false;
+		decoyHeard = false;
 		
 		visionFactor = 0.0f;
 		visionFactorCaution = 0.6f;
@@ -64,7 +66,7 @@ public class EnemyDataScript : MonoBehaviour {
 		//lookAtTime = 2.0f;
 		
 		targetChasePlayer = Vector3.zero;
-		lastPointSeen = Vector3.zero;
+		lastPointSensed = Vector3.zero;
 		lookAts[0] = Vector3.zero;
 		lookAts[1] = Vector3.zero;
 		lookAts[2] = Vector3.zero;
