@@ -36,6 +36,19 @@ public class EnemyDataScript : MonoBehaviour {
 					
 	public Vector3[] lookAts;
 	
+	private Vector3 initPos,
+					initLookTo;
+					
+	public Vector3 InitPos
+	{
+		get{  return initPos;  }
+	}
+	
+	public Vector3 InitLookTo
+	{
+		get{  return initLookTo;  }
+	}
+	
 	//private RAIN.Memory.MemoryObject debugObject = null;
 	//private float debug = 0.0f;
 	
@@ -45,6 +58,9 @@ public class EnemyDataScript : MonoBehaviour {
 		aiRig = gameObject.GetComponentInChildren<AIRig>();
 		aiRig.AI.WorkingMemory.SetItem("player", GameObject.FindGameObjectWithTag("Player"));
 		lookAts = new Vector3[4];
+		initPos = transform.position;
+		initLookTo = transform.position + transform.forward;
+		
 		init();
 	}
 	
