@@ -37,7 +37,7 @@ public class lookArround : RAINAction
 		if(eds.timerLookAt >= eds.lookAtTime)
     	{
 			eds.timerLookAt = 0.0f;
-			eds.currentLookAt = eds.lookAts[Random.Range(0,4)];
+			eds.currentLookAt = eds.lookAts[Random.Range(0,eds.validLookAts)];
 			ai.WorkingMemory.SetItem("lookAtPoint", eds.currentLookAt);
     	}
     	

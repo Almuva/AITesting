@@ -35,6 +35,7 @@ public class EnemyDataScript : MonoBehaviour {
 					currentLookAt;
 					
 	public Vector3[] lookAts;
+	public int validLookAts;
 	
 	private Vector3 initPos,
 					initLookTo;
@@ -88,6 +89,7 @@ public class EnemyDataScript : MonoBehaviour {
 		lookAts[2] = Vector3.zero;
 		lookAts[3] = Vector3.zero;
 		currentLookAt = Vector3.zero;
+		validLookAts = 0;
 		
 		aiRig.AI.WorkingMemory.SetItem("hasToChasePlayer", false);
 		aiRig.AI.WorkingMemory.SetItem("hasToInvestigate", false);

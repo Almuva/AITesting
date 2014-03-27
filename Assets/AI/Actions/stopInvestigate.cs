@@ -21,10 +21,34 @@ public class stopInvestigate : RAINAction
     {
 		//Hemos llegado a un lugar sospechoso. Hay que guardar los datos para mirar al rededor
 		EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
-		eds.lookAts[0] = ai.Body.transform.position + ai.Body.transform.forward;
-		eds.lookAts[1] = ai.Body.transform.position + ai.Body.transform.right;
-		eds.lookAts[2] = ai.Body.transform.position - ai.Body.transform.forward;
-		eds.lookAts[3] = ai.Body.transform.position - ai.Body.transform.right;
+		
+		//Podemos mirar en una direccion si hay al menos 2 metros sin que haya una pared o algo
+		int validLookAts = 0;
+		if(!Physics.Raycast(ai.Body.transform.position, ai.Body.transform.forward, 2.0f))
+		{
+			eds.lookAts[validLookAts] = ai.Body.transform.position + ai.Body.transform.forward;
+			validLookAts++;
+		}
+		
+		if(!Physics.Raycast(ai.Body.transform.position, ai.Body.transform.right, 2.0f))
+		{
+			eds.lookAts[validLookAts] = ai.Body.transform.position + ai.Body.transform.right;
+			validLookAts++;
+		}
+		
+		if(!Physics.Raycast(ai.Body.transform.position, -ai.Body.transform.forward, 2.0f))
+		{
+			eds.lookAts[validLookAts] = ai.Body.transform.position - ai.Body.transform.forward;
+			validLookAts++;
+		}
+		
+		if(!Physics.Raycast(ai.Body.transform.position, -ai.Body.transform.right, 2.0f))
+		{
+			eds.lookAts[validLookAts] = ai.Body.transform.position - ai.Body.transform.right;
+			validLookAts++;
+		}
+		
+		eds.validLookAts = validLookAts;
 		
 		eds.timerLookArround = 0.0f;
 		eds.timerLookAt = 0.0f;
