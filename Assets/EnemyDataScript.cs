@@ -50,6 +50,8 @@ public class EnemyDataScript : MonoBehaviour {
 		get{  return initLookTo;  }
 	}
 	
+	public string waypointsName = ""; //Solo para patrulleros
+	
 	//private RAIN.Memory.MemoryObject debugObject = null;
 	//private float debug = 0.0f;
 	
@@ -99,7 +101,7 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () 
-	{	
+	{;	
 	}
 	
 	public void addVisionFactor(float vf_delta)
