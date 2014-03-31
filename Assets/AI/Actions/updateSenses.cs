@@ -48,7 +48,7 @@ public class updateSenses : RAINAction
 		
 		
 	//MODIFICAR VISIONFACTOR
-		playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+		playerPos = eds.getPlayer().transform.position;
 		enemyEyesPos = ai.Senses.GetSensor("mainVision").Position;
 		distance = Vector3.Distance(playerPos, enemyEyesPos);
 		
@@ -110,7 +110,7 @@ public class updateSenses : RAINAction
 			
 			if(eds.isVisionFactorBeyondThreshold())
 			{
-				eds.lastPointSensed = GameObject.FindGameObjectWithTag("Player").transform.position;
+				eds.lastPointSensed = eds.getPlayer().transform.position;
 				ai.WorkingMemory.SetItem("lastPointSensed", eds.lastPointSensed);
 			}
 		}
@@ -128,6 +128,10 @@ public class updateSenses : RAINAction
 			eds.decoyHeard = false;
 			ai.WorkingMemory.SetItem("decoyHeard", false);
 			
+			//Las siguientes 2 lineas son solo para patrulleros (no pasa nada si estan en los demas. Seran 2 variables que no se usaran)
+			ai.WorkingMemory.SetItem("hasToPatrol", false);
+			ai.WorkingMemory.SetItem("currentWPindex", -1);
+			
 			if(eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION
 			   && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
 			{
@@ -139,7 +143,7 @@ public class updateSenses : RAINAction
 			if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.NORMAL) eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
 			eds.decoyHeard = true;
 			ai.WorkingMemory.SetItem("decoyHeard", true);
-			eds.lastPointSensed = GameObject.FindGameObjectWithTag("Player").transform.position;
+			eds.lastPointSensed = eds.getPlayer().transform.position;
 			ai.WorkingMemory.SetItem("lastPointSensed", eds.lastPointSensed);
 		}
 		

@@ -55,9 +55,7 @@ public class chooseCurrentWP : RAINAction
 			_currentWPindex = _wpSet.GetClosestWaypointIndex(ai.Kinematic.Position);
 			currentWPchanged = true;
 		}
-		
-		//Si hemos llegado al currentWP (estamos patrullando)...
-		if(ai.Motor.IsAtMoveTarget)
+		else if(ai.Motor.IsAtMoveTarget) //Si hemos llegado al currentWP (estamos patrullando)...
 		{
 			currentWPchanged = true;
 			

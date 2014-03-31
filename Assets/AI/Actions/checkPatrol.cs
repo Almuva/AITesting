@@ -24,11 +24,6 @@ public class checkPatrol : RAINAction
 		{
 			ai.WorkingMemory.SetItem("hasToPatrol", true);
 		}
-		else
-		{
-			ai.WorkingMemory.SetItem("hasToPatrol", false);
-			ai.WorkingMemory.SetItem("currentWPindex", -1);
-		}
 		
         return ActionResult.FAILURE;
     }

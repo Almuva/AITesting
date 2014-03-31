@@ -1,14 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\Actions\chooseCurrentWP.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\Actions\updateSenses.cs">
     <Files>
-      <File FileName="Assets\AI\Actions\updateSenses.cs" Line="31" Column="33" />
-      <File FileName="Assets\EnemyDataScript.cs" Line="104" Column="3" />
+      <File FileName="Assets\AI\Actions\changeAttentionDegree.cs" Line="8" Column="2" />
+      <File FileName="Assets\AI\Actions\updateSenses.cs" Line="112" Column="5" />
+      <File FileName="Assets\EnemyDataScript.cs" Line="136" Column="17" />
       <File FileName="Assets\AI\Actions\getGKinfo.cs" Line="1" Column="1" />
       <File FileName="Assets\AI\Actions\lookArround.cs" Line="1" Column="1" />
       <File FileName="Assets\AI\Actions\stopInvestigate.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\checkChasePlayer.cs" Line="22" Column="1" />
-      <File FileName="Assets\AI\Actions\chooseCurrentWP.cs" Line="32" Column="51" />
+      <File FileName="Assets\AI\Actions\checkChasePlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\Actions\chooseCurrentWP.cs" Line="39" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

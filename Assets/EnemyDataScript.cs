@@ -5,6 +5,7 @@ using RAIN.Core;
 public class EnemyDataScript : MonoBehaviour {
 
 	private AIRig aiRig = null;
+	private GameObject player; 
 	
 	public enum AttentionDegrees
 	{
@@ -59,7 +60,8 @@ public class EnemyDataScript : MonoBehaviour {
 	void Start () 
 	{
 		aiRig = gameObject.GetComponentInChildren<AIRig>();
-		aiRig.AI.WorkingMemory.SetItem("player", GameObject.FindGameObjectWithTag("Player"));
+		player = GameObject.FindGameObjectWithTag("Player");
+		aiRig.AI.WorkingMemory.SetItem("player", player);
 		lookAts = new Vector3[4];
 		initPos = transform.position;
 		initLookTo = transform.position + transform.forward;
@@ -126,6 +128,11 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	public void setTargetChasePlayer()
 	{
-		targetChasePlayer = GameObject.FindGameObjectWithTag("Player").transform.position;
+		targetChasePlayer = player.transform.position;
+	}
+	
+	public GameObject getPlayer()
+	{
+		return player;
 	}
 }
