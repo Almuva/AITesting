@@ -65,13 +65,13 @@ public class EnemyDataScript : MonoBehaviour {
 		lookAts = new Vector3[4];
 		initPos = transform.position;
 		initLookTo = transform.position + transform.forward;
-		
+		attentionDegree = AttentionDegrees.CAUTION;
 		init();
 	}
 	
 	void init()
 	{
-		attentionDegree = AttentionDegrees.NORMAL;
+		//attentionDegree = AttentionDegrees.NORMAL;
 		
 		isSeeingPlayer = false;
 		suspects = false;
@@ -134,5 +134,10 @@ public class EnemyDataScript : MonoBehaviour {
 	public GameObject getPlayer()
 	{
 		return player;
+	}
+	
+	public void die()
+	{
+		aiRig.AI.WorkingMemory.SetItem("hasToDie", true);
 	}
 }

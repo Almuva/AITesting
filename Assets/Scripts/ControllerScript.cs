@@ -59,6 +59,13 @@ public class ControllerScript : MonoBehaviour {
 			audio.Play();
 		}
 		
+		if(Input.GetKey(KeyCode.M))
+		{
+			GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+			EnemyDataScript eds = enemy.GetComponentInChildren<EnemyDataScript>();
+			eds.die();
+		}
+		
 		//orientar hacia direccion de movimiento
 		if(moveDir != Vector3.zero)
 		{
