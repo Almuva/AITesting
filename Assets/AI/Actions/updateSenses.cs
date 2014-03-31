@@ -119,7 +119,7 @@ public class updateSenses : RAINAction
 		//Si el visionFactor se encuentra en su valor maximo se pasa a ALERT
 		if(eds.visionFactor == 1.0f)
 		{
-			eds.attentionDegree = EnemyDataScript.AttentionDegrees.ALERT;
+			eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.ALERT);
 			updateTargetChasePlayer(ai);
 		}
 		else if (eds.isVisionFactorBeyondThreshold())
@@ -135,12 +135,13 @@ public class updateSenses : RAINAction
 			if(eds.attentionDegree != EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION
 			   && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
 			{
-				eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
+				eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.CAUTION);
 			}
 		}
 		else if(decoyHeardNow && eds.attentionDegree != EnemyDataScript.AttentionDegrees.ALERT)
 		{
-			if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.NORMAL) eds.attentionDegree = EnemyDataScript.AttentionDegrees.CAUTION;
+			if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.NORMAL) 
+				eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.CAUTION);
 			eds.decoyHeard = true;
 			ai.WorkingMemory.SetItem("decoyHeard", true);
 			eds.lastPointSensed = eds.getPlayer().transform.position;

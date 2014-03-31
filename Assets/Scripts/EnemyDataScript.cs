@@ -29,7 +29,11 @@ public class EnemyDataScript : MonoBehaviour {
 					timerLookArround,
 					lookArroundTime,	
 					timerLookAt,
-					lookAtTime;
+					lookAtTime,
+					currentVel,
+					normalVel,
+					cautionVel,
+					alertVel;
 					
 	public Vector3 targetChasePlayer,
 					lastPointSensed,
@@ -65,13 +69,17 @@ public class EnemyDataScript : MonoBehaviour {
 		lookAts = new Vector3[4];
 		initPos = transform.position;
 		initLookTo = transform.position + transform.forward;
-		attentionDegree = AttentionDegrees.CAUTION;
+		
+		//normalVel = 1.0f;
+		//cautionVel = 2.0f;
+		//alertVel = 3.0f;
+		
 		init();
 	}
 	
 	void init()
 	{
-		//attentionDegree = AttentionDegrees.NORMAL;
+		attentionDegree = AttentionDegrees.NORMAL;
 		
 		isSeeingPlayer = false;
 		suspects = false;
@@ -85,6 +93,7 @@ public class EnemyDataScript : MonoBehaviour {
 		//lookArroundTime = 5.0f;	
 		timerLookAt = 0.0f;
 		//lookAtTime = 2.0f;
+		currentVel = normalVel;
 		
 		targetChasePlayer = Vector3.zero;
 		lastPointSensed = Vector3.zero;
@@ -116,6 +125,29 @@ public class EnemyDataScript : MonoBehaviour {
 	{
 		if(vf_delta < 0.0f) return;
 		visionFactor = Mathf.Clamp(visionFactor-vf_delta, 0.0f, 1.0f);
+	}
+	
+	public void setAttentionDegree(AttentionDegrees ad)
+	{
+		switch(ad)
+		{
+			case AttentionDegrees.NORMAL:
+				currentVel = normalVel;
+				break;
+			case AttentionDegrees.CAUTION:
+			case AttentionDegrees.PERMANENT_CAUTION:
+				currentVel = cautionVel;
+				break;
+			case AttentionDegrees.ALERT:
+				currentVel = alertVel;
+				break;
+			case AttentionDegrees.PANIC:
+				currentVel = 0.0f;
+				break;
+		}
+		
+		attentionDegree = ad;
+		aiRig.AI.WorkingMemory.SetItem("currentVel", currentVel);
 	}
 	
 	/// <summary>

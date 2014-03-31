@@ -24,11 +24,11 @@ public class changeAttentionDegree : RAINAction
     	//Cambiamos el estado de alerta segun el estado actual
 		if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.ALERT)
     	{
-			eds.attentionDegree = EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION;
+			eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION);
     	}
 		else if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.CAUTION)
     	{
-			eds.attentionDegree = EnemyDataScript.AttentionDegrees.NORMAL;
+			eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.NORMAL);
     	}
 		
 		ai.WorkingMemory.SetItem("hasToChangeAD", false);
