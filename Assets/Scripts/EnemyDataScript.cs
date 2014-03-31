@@ -30,6 +30,10 @@ public class EnemyDataScript : MonoBehaviour {
 					lookArroundTime,	
 					timerLookAt,
 					lookAtTime,
+					patrolerStopTime,
+					patrolerStopTimeBase,
+					patrolerStopTimeRnd,
+					patrolerStopTimer,
 					currentVel,
 					normalVel,
 					cautionVel,
@@ -93,6 +97,7 @@ public class EnemyDataScript : MonoBehaviour {
 		//lookArroundTime = 5.0f;	
 		timerLookAt = 0.0f;
 		//lookAtTime = 2.0f;
+		resetPatrolerStopTime();
 		currentVel = normalVel;
 		
 		targetChasePlayer = Vector3.zero;
@@ -166,6 +171,12 @@ public class EnemyDataScript : MonoBehaviour {
 	public GameObject getPlayer()
 	{
 		return player;
+	}
+	
+	public void resetPatrolerStopTime()
+	{
+		patrolerStopTime = patrolerStopTimeBase + Random.Range(0.0f, patrolerStopTimeRnd);
+		patrolerStopTimer = 0.0f;
 	}
 	
 	public void die()

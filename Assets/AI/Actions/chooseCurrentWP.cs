@@ -78,6 +78,19 @@ public class chooseCurrentWP : RAINAction
 			ai.Motor.moveTarget = _currentWP;
 		}
 		
+		if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.NORMAL)
+		{
+			//Incrementamos el contador de tiempo que llevamos patrullando
+			eds.patrolerStopTimer += Time.deltaTime;
+			
+			//cada x tiempo paramos
+			if(eds.patrolerStopTimer >= eds.patrolerStopTime)
+			{
+				eds.resetPatrolerStopTime();
+				ai.WorkingMemory.SetItem("hasToStop", true);
+			}
+		}
+		
         base.Start(ai);
     }
 
