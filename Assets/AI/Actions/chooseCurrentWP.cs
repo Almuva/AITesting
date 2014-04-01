@@ -76,6 +76,7 @@ public class chooseCurrentWP : RAINAction
 			ai.WorkingMemory.SetItem("currentWPindex", _currentWPindex);
 			_currentWP.VectorTarget = _wpSet.Waypoints[_currentWPindex].position;
 			ai.Motor.moveTarget = _currentWP;
+			ai.Motor.Speed = ai.WorkingMemory.GetItem("currentVel").GetValue<float>();
 		}
 		
 		if(eds.attentionDegree == EnemyDataScript.AttentionDegrees.NORMAL)

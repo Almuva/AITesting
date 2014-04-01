@@ -5,11 +5,11 @@ using RAIN.Core;
 using RAIN.Action;
 
 [RAINAction]
-public class checkPatrol : RAINAction
+public class alertOthers : RAINAction
 {
-    public checkPatrol()
+    public alertOthers()
     {
-        actionName = "checkPatrol";
+        actionName = "alertOthers";
     }
 
     public override void Start(AI ai)
@@ -20,16 +20,11 @@ public class checkPatrol : RAINAction
     public override ActionResult Execute(AI ai)
     {
 		EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
-		if(!eds.suspects)
-		{
-			ai.WorkingMemory.SetItem("hasToPatrol", true);
-		}
-		else
-		{
-			ai.WorkingMemory.SetItem("hasToPatrol", false);
-		}
+		eds.soundAlertShout.audio.Play();
+		eds.wantToAlert = false;
+		eds.canAlert = false;
 		
-        return ActionResult.FAILURE;
+        return ActionResult.SUCCESS;
     }
 
     public override void Stop(AI ai)

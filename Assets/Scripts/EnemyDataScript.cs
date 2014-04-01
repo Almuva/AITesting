@@ -16,11 +16,15 @@ public class EnemyDataScript : MonoBehaviour {
 		PANIC = 4
 	}
 	
+	public GameObject soundAlertShout;
+	
 	public AttentionDegrees attentionDegree;
 	
 	public bool isSeeingPlayer,
 				suspects,
-				decoyHeard;
+				decoyHeard,
+				wantToAlert,
+				canAlert;
 	
 	public float 	visionFactor,
 					visionFactorCaution,
@@ -83,11 +87,13 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	void init()
 	{
-		attentionDegree = AttentionDegrees.NORMAL;
+		setAttentionDegree(AttentionDegrees.NORMAL);
 		
 		isSeeingPlayer = false;
 		suspects = false;
 		decoyHeard = false;
+		wantToAlert = false;
+		canAlert = true;
 		
 		visionFactor = 0.0f;
 		visionFactorCaution = 0.6f;
@@ -117,7 +123,7 @@ public class EnemyDataScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () 
-	{;	
+	{	
 	}
 	
 	public void addVisionFactor(float vf_delta)

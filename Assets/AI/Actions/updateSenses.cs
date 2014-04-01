@@ -121,6 +121,7 @@ public class updateSenses : RAINAction
 		{
 			eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.ALERT);
 			updateTargetChasePlayer(ai);
+			eds.wantToAlert = true;
 		}
 		else if (eds.isVisionFactorBeyondThreshold())
 		{

@@ -24,6 +24,7 @@ public class stopChasingPlayer : RAINAction
     	eds.suspects = false;
     	eds.decoyHeard = false;
     	ai.WorkingMemory.SetItem("decoyHeard", false);
+    	eds.canAlert = true;
     	
 		ai.Body.GetComponent<EnemyDataScript>().targetChasePlayer = Vector3.zero;
 		ai.WorkingMemory.SetItem("hasToChangeAD", true);

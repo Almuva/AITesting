@@ -5,11 +5,11 @@ using RAIN.Core;
 using RAIN.Action;
 
 [RAINAction]
-public class checkPatrol : RAINAction
+public class checkCautionState : RAINAction
 {
-    public checkPatrol()
+    public checkCautionState()
     {
-        actionName = "checkPatrol";
+        actionName = "checkCautionState";
     }
 
     public override void Start(AI ai)
@@ -20,16 +20,12 @@ public class checkPatrol : RAINAction
     public override ActionResult Execute(AI ai)
     {
 		EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
-		if(!eds.suspects)
-		{
-			ai.WorkingMemory.SetItem("hasToPatrol", true);
-		}
-		else
-		{
-			ai.WorkingMemory.SetItem("hasToPatrol", false);
-		}
 		
-        return ActionResult.FAILURE;
+		bool isInCautionState = eds.attentionDegree == EnemyDataScript.AttentionDegrees.CAUTION
+								|| eds.attentionDegree == EnemyDataScript.AttentionDegrees.PERMANENT_CAUTION;
+		ai.WorkingMemory.SetItem("isInCautionState", isInCautionState);
+		
+		return ActionResult.FAILURE;
     }
 
     public override void Stop(AI ai)
