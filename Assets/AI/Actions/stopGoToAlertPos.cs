@@ -5,11 +5,11 @@ using RAIN.Core;
 using RAIN.Action;
 
 [RAINAction]
-public class stopInvestigate : RAINAction
+public class stopGoToAlertPos : RAINAction
 {
-    public stopInvestigate()
+	public stopGoToAlertPos()
     {
-        actionName = "stopInvestigate";
+		actionName = "stopGoToAlertPos";
     }
 
     public override void Start(AI ai)
@@ -19,21 +19,14 @@ public class stopInvestigate : RAINAction
 
     public override ActionResult Execute(AI ai)
     {
-		//Hemos llegado a un lugar sospechoso. Hay que guardar los datos para mirar al rededor
 		EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
-		
+		eds.alertedByOther = false;
+		ai.WorkingMemory.SetItem("hasToAnswerAlert", false);
+		ai.WorkingMemory.SetItem("hasToChangeAD", true);
 		eds.prepareLookAts();
-		
-		eds.suspects = false;
-		eds.chronoBeforeInvestigate = 0.0f;
-		
-		eds.decoyHeard = false;
-		ai.WorkingMemory.SetItem("decoyHeard", false);
-		ai.WorkingMemory.SetItem("hasToInvestigate", false);
-		
 		ai.WorkingMemory.SetItem("hasToLookArround", true);
 		ai.WorkingMemory.SetItem("lookAtPoint", eds.currentLookAt);
-		
+    
         return ActionResult.SUCCESS;
     }
 

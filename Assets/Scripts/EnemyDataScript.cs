@@ -24,12 +24,14 @@ public class EnemyDataScript : MonoBehaviour {
 				suspects,
 				decoyHeard,
 				wantToAlert,
-				canAlert;
+				canAlert,
+				alertedByOther;
 	
 	public float 	visionFactor,
 					visionFactorCaution,
 					chronoBeforeInvestigate,
 					waitingBeforeInvestigate,
+					waitBeforeAnswerAlert,
 					timerLookArround,
 					lookArroundTime,	
 					timerLookAt,
@@ -94,6 +96,7 @@ public class EnemyDataScript : MonoBehaviour {
 		decoyHeard = false;
 		wantToAlert = false;
 		canAlert = true;
+		alertedByOther = false;
 		
 		visionFactor = 0.0f;
 		visionFactorCaution = 0.6f;
@@ -159,6 +162,40 @@ public class EnemyDataScript : MonoBehaviour {
 		
 		attentionDegree = ad;
 		aiRig.AI.WorkingMemory.SetItem("currentVel", currentVel);
+	}
+	
+	public void prepareLookAts()
+	{
+		//Podemos mirar en una direccion si hay al menos 2 metros sin que haya una pared o algo
+		validLookAts = 0;
+		if(!Physics.Raycast(transform.position, transform.forward, 2.0f))
+		{
+			lookAts[validLookAts] = transform.position + transform.forward;
+			validLookAts++;
+		}
+		
+		if(!Physics.Raycast(transform.position, transform.right, 2.0f))
+		{
+			lookAts[validLookAts] = transform.position + transform.right;
+			validLookAts++;
+		}
+		
+		if(!Physics.Raycast(transform.position, -transform.forward, 2.0f))
+		{
+			lookAts[validLookAts] = transform.position - transform.forward;
+			validLookAts++;
+		}
+		
+		if(!Physics.Raycast(transform.position, -transform.right, 2.0f))
+		{
+			lookAts[validLookAts] = transform.position - transform.right;
+			validLookAts++;
+		}
+		
+		timerLookArround = 0.0f;
+		timerLookAt = 0.0f;
+		
+		currentLookAt = lookAts[0];
 	}
 	
 	/// <summary>

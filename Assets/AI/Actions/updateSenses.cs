@@ -43,8 +43,26 @@ public class updateSenses : RAINAction
 		bool playerSensed = playerSeenMain | playerSeenPeriferial | playerSensedNear;
 		eds.isSeeingPlayer = playerSeenMain | playerSeenPeriferial;
 		
+		
 		//Sonido
 		bool decoyHeardNow = ai.WorkingMemory.GetItem("decoySensed").GetValue<GameObject>() != null;
+		
+		GameObject alertHeardNow = ai.WorkingMemory.GetItem("alertSensed").GetValue<GameObject>();
+		if(alertHeardNow != null)
+		{
+			eds.setAttentionDegree(EnemyDataScript.AttentionDegrees.ALERT);
+			eds.alertedByOther = true;
+			ai.WorkingMemory.SetItem("hasToAnswerAlert", true);
+			ai.WorkingMemory.SetItem("hasToLookBeforeAnswer", true);
+			ai.WorkingMemory.SetItem("customTimer", eds.waitBeforeAnswerAlert + Random.Range(0.0f, 1.0f));
+		}
+		
+		//Es bastante de gratis que esto vaya aqui, pero asi si al enemy le han avisado va pillando la ultima posicion donde han visto al player
+		if(eds.alertedByOther)
+		{
+			ai.WorkingMemory.SetItem("alertPos", aiBlackboard.instance.getAlertPos());
+			//ai.WorkingMemory.SetItem("alertPos", Vector3.zero);
+		}
 		
 		
 	//MODIFICAR VISIONFACTOR
@@ -56,9 +74,11 @@ public class updateSenses : RAINAction
 		if((eds.attentionDegree == EnemyDataScript.AttentionDegrees.ALERT)  &&  playerSensed)
 		{
 			updateTargetChasePlayer(ai);
+			//hasta que se diga lo contrario, cada vez que vemos a full al player actualizamos la posicion de alerta a la que acuden los alertados
+			aiBlackboard.instance.setAlertPos(eds.getPlayer().transform.position);
 			return ActionResult.SUCCESS;
 		}
-		
+
 		//si el player esta dentro de nuestro "espacio vital" incrementamos un poco el visionFactor
 		if(playerSensedNear)
 		{
@@ -68,7 +88,7 @@ public class updateSenses : RAINAction
 			//Modificamos el visionFactor
 			eds.addVisionFactor(deltaFactor);
 		}
-		
+	
 		//si vemos al player con el cono de vision periferico, incrementamos el visionFactor un poco (la mitad que si lo vemos con el main)
 		if(playerSeenPeriferial)
 		{
@@ -81,7 +101,7 @@ public class updateSenses : RAINAction
 			//Modificamos el visionFactor
 			eds.addVisionFactor(deltaFactor);
 		}
-		
+	
 		//si vemos al player con el cono de vision principal, incrementamos el visionFactor bastante
 		if(playerSeenMain)
 		{
@@ -94,7 +114,7 @@ public class updateSenses : RAINAction
 			//Modificamos el visionFactor
 			eds.addVisionFactor(deltaFactor);
 		}
-		
+	
 		//Si no se ha detectado al player de ninguna de las maneras decrementamos el visionFactor
 		if(!playerSensed)
 		{

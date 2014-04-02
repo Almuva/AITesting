@@ -12,18 +12,20 @@ public class customTimer : RAINAction
     public customTimer()
     {
         actionName = "customTimer";
-        target = 3.0f;
+        target = 0.0f;
         count = 0.0f;
     }
 
     public override void Start(AI ai)
     {
+    	target = ai.WorkingMemory.GetItem("customTimer").GetValue<float>();
         base.Start(ai);
     }
 
     public override ActionResult Execute(AI ai)
     {
     	count += Time.deltaTime;
+		ai.WorkingMemory.SetItem("customTimerCount", count);
     	
     	if(count >= target)
     	{

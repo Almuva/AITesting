@@ -5,11 +5,11 @@ using RAIN.Core;
 using RAIN.Action;
 
 [RAINAction]
-public class checkGatekeep : RAINAction
+public class checkAlerted : RAINAction
 {
-    public checkGatekeep()
+    public checkAlerted()
     {
-        actionName = "checkGatekeep";
+        actionName = "checkAlerted";
     }
 
     public override void Start(AI ai)
@@ -19,17 +19,7 @@ public class checkGatekeep : RAINAction
 
     public override ActionResult Execute(AI ai)
     {
-		EnemyDataScript eds = ai.Body.GetComponent<EnemyDataScript>();
-		if(!eds.suspects)
-		{
-			ai.WorkingMemory.SetItem("hasToGK", true);
-		}
-		else
-		{
-			ai.WorkingMemory.SetItem("hasToGK", false);
-		}
-        
-		return ActionResult.SUCCESS;
+        return ActionResult.SUCCESS;
     }
 
     public override void Stop(AI ai)

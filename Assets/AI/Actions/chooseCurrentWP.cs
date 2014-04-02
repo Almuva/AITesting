@@ -89,6 +89,8 @@ public class chooseCurrentWP : RAINAction
 			{
 				eds.resetPatrolerStopTime();
 				ai.WorkingMemory.SetItem("hasToStop", true);
+				//No se me ocurre otro sitio donde meter esto
+				ai.WorkingMemory.SetItem("customTimer", 4.0f);
 			}
 		}
 		

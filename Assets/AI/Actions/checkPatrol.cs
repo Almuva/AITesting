@@ -29,7 +29,7 @@ public class checkPatrol : RAINAction
 			ai.WorkingMemory.SetItem("hasToPatrol", false);
 		}
 		
-        return ActionResult.FAILURE;
+        return ActionResult.SUCCESS;
     }
 
     public override void Stop(AI ai)
