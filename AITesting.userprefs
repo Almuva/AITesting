@@ -1,20 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\Actions\customTimer2.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\TwinSouls_thePathOfShadows\repo\Unity\Assets\Editor\LinceEditor.cs">
     <Files>
-      <File FileName="Assets\AI\Actions\updateSenses.cs" Line="168" Column="30" />
-      <File FileName="Assets\Scripts\EnemyDataScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\checkAlertOthers.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\alertOthers.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\stopInvestigate.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\stopGoToAlertPos.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\stopChasingPlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\aiBlackboard.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\chooseCurrentWP.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\customTimer.cs" Line="10" Column="1" />
-      <File FileName="Assets\AI\Actions\checkChasePlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\facedDecoyPos.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\Actions\customTimer2.cs" Line="38" Column="31" />
+      <File FileName="..\TwinSouls_thePathOfShadows\repo\Unity\Assets\Editor\LinceEditor.cs" Line="405" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
